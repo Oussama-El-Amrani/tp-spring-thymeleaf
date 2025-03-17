@@ -5,6 +5,8 @@ import io.oussamaib0.tpspringthymeleaf.repository.PatientRepository;
 import io.oussamaib0.tpspringthymeleaf.services.IPatientService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,5 +39,10 @@ public class PatientService implements IPatientService {
     @Override
     public List<Patient> getAllPatients() {
         return patientRepository.findAll();
+    }
+
+    @Override
+    public Page<Patient> findByNameContainsIgnoreCase(String keyword, Pageable pageable) {
+        return patientRepository.findByNameContainsIgnoreCase(keyword, pageable);
     }
 }
