@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>hospital</title>
+</head>
+<body>
+<h1>Patients</h1>
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>is Sick</th>
+        <th>Score</th>
+    </tr>
+    <tr th:each="patient : ${patients}">
+        <td th:text="${patient.id}"></td>
+        <td th:text="${patient.name}"></td>
+        <td th:text="${patient.isSick}"></td>
+        <td th:text="${patient.score}"></td>
+</body>
+</html>
