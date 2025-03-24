@@ -29,9 +29,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Date Naissance</th>
-                        <th>État</th>
-                        <th>Score</th>
+                        <th>Date of birth</th>
+                        <th>State</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,6 +51,14 @@
                                      th:text="${p.score} + '%'">
                                 </div>
                             </div>
+                        </td>
+                        <td>
+                            <a
+                                    th:href="@{patient-delete/{id}(id=${p.id}, keyword=${keyword}, page=${currentPage})}"
+                                    class="btn btn-sm btn-danger"
+                            >
+                                <i class="bi bi-trash"></i> Supprimer
+                            </a>
                         </td>
                     </tr>
                     </tbody>
