@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template}">
+<head>
+    <title th:text="${edit} ? 'Modifier Patient' : 'Nouveau Patient'"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header" th:text="${edit} ? 'Modifier Patient' : 'Nouveau Patient'"></div>
+            <div class="card-body">
+                <form method="post" th:action="@{/patient-save}" th:object="${patient}">
+                    <input type="hidden" th:field="*{id}" th:if="${edit}">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input class="form-control" type="text" th:field="*{name}">
+                        <span class="text-danger" th:errors="*{name}"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Date of birth</label>
+                        <input class="form-control" type="date"
+                               th:field="*{birthDate}"
+                               th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                               required>
+                        <span class="text-danger" th:errors="*{birthDate}"></span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" th:field="*{sick}">
+                        <label class="form-check-label">Sick</label>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Score</label>
+                        <input class="form-control" type="number" th:field="*{score}">
+                        <span class="text-danger" th:errors="*{score}"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i>
+                        <span th:text="${edit} ? 'Mettre à jour' : 'Enregistrer'"></span>
+                    </button>
+                    <a class="btn btn-secondary" th:href="@{/index}">
+                        <i class="bi bi-arrow-left"></i> Cancel
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -7,8 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -35,6 +37,15 @@ public class PatientController {
         return "patients";
     }
 
+    @PostMapping("/patient-save")
+    public String save(Patient patient, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "formPatient";
+        }
+        patientService.savePatient(patient);
+        return "redirect:/index";
+    }
+
     @GetMapping("/patient-delete/{id}")
     public String delete(
             @PathVariable Long id,
@@ -43,5 +54,26 @@ public class PatientController {
     ) {
         patientService.deletePatient(id);
         return "redirect:/index?page=" + page + "&keyword=" + keyword;
+    }
+
+    @GetMapping("/patient-edit/{id}")
+    public String edit(
+            @PathVariable Long id,
+            Model model
+    ) {
+        Patient patient = patientService.getPatient(id);
+        if (patient == null) {
+            return "redirect:/index";
+        }
+        model.addAttribute("patient", patient);
+        model.addAttribute("edit", true);
+        return "formPatient";
+    }
+
+    @GetMapping("/patient-form")
+    public String showPatientForm(Model model) {
+        model.addAttribute("patient", new Patient());
+        model.addAttribute("edit", false);
+        return "formPatient";
     }
 }
